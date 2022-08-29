@@ -18,6 +18,7 @@ const MovieDetails = () => {
   const [info, setInfo] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const backLink = location?.state?.from ?? '/';
 
   useEffect(() => {
     const getMovie = async () => {
@@ -35,9 +36,7 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Button onClick={() => navigate(location?.state?.from ?? '/')}>
-        Go Back
-      </Button>
+      <Button onClick={() => navigate(backLink)}>Go Back</Button>
       {info && (
         <CardContainer>
           <ImageContainer>
@@ -58,8 +57,12 @@ const MovieDetails = () => {
       <InfoContainer>
         <DataTitle>Additional information</DataTitle>
         <ul>
-          <InfoLink to="cast">Cast</InfoLink>
-          <InfoLink to="reviews">Reviews</InfoLink>
+          <InfoLink to="cast" state={{ from: backLink }}>
+            Cast
+          </InfoLink>
+          <InfoLink to="reviews" state={{ from: backLink }}>
+            Reviews
+          </InfoLink>
         </ul>
       </InfoContainer>
       <Outlet />
